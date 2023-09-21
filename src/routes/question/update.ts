@@ -19,7 +19,22 @@ async (req: Request, res: Response) => {
 router.post(
   '/api/question/:qid',
   async (req: Request, res: Response) => {
-    const { label, type,variable, value,options, completed,q_id } = req.body;
+    const { question_order,
+      question_label, 
+      label,
+      error_label, 
+      type,
+      variable, 
+      validation_rules,
+      options, 
+      q_id, 
+      section_id,
+      custom_attributes,
+      instruction,
+      disabled_rules,
+      skip_logic,
+      enabled_rules 
+    } = req.body;
     //console.log(req.body.question);
     /*
     const questionExisting = await Question.findOne({
@@ -32,15 +47,24 @@ router.post(
     }*/
     // Create questionnaire in our database
     const question = await Question.update({
-      label:label,            
+      question_order:question_order,
+      question_label:question_label,
+      label:label, 
+      error_label:error_label,                       
       type: type, // sanitize: convert email to lowercase
-      value:value,
+      validation_rules:validation_rules,
       options:options,
+      custom_attributes:custom_attributes,
       variable:variable,
-      completed:completed?1:0,
+      instruction:instruction,
+      disabled_rules:disabled_rules,
+      skip_logic:skip_logic,
+      enabled_rules:enabled_rules,
+      section_id:Number.parseInt(section_id),
       questionnaire_id:Number.parseInt(q_id)
   },{
     where:{
+      //omitNull: false,
       id:req.params.qid
     }
   }).catch(function(err) {

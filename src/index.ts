@@ -2,6 +2,8 @@ import { app } from './app';
 import * as dotenv from "dotenv";
 import * as path from "path";
 import { SequelizeDb } from './config/database';
+import { Section } from './models/Section';
+import { Question } from './models/Question';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') })
 
@@ -15,6 +17,8 @@ try {
     console.log('Connection has been established successfully.');
     await SequelizeDb.sync();
     //User.sync({force:true});
+    //Section.sync({force:true});
+    //Question.sync({force:true});
 } catch (error) {
     console.error(`Unable to connect to the database:'${error}`);
 }

@@ -5,7 +5,22 @@ const router = express.Router();
 router.post(
   '/api/question',
   async (req: Request, res: Response) => {
-    const { label, type,variable, value,options, completed,q_id } = req.body;
+    const { question_label,
+      label, 
+      error_label,
+      question_order, 
+      type,
+      variable,       
+      options,       
+      q_id, 
+      section_id,
+      custom_attributes,
+      validation_rules,
+      instruction,
+      disabled_rules,
+      skip_logic,
+      enabled_rules 
+    } = req.body;
     //console.log(req.body.question);
     /*
     const questionExisting = await Question.findOne({
@@ -18,12 +33,20 @@ router.post(
     }*/
     // Create questionnaire in our database
     const question = await Question.create({
-      label:label,            
+      question_label:question_label,
+      question_order:question_order,
+      label:label,
+      error_label:error_label,            
       type: type, // sanitize: convert email to lowercase
-      value:value,
+      validation_rules:validation_rules,
       options:options,
+      custom_attributes:custom_attributes,
       variable:variable,
-      completed:completed?1:0,
+      instruction:instruction,
+      disabled_rules:disabled_rules,
+      skip_logic:skip_logic,
+      enabled_rules:enabled_rules,
+      section_id:Number.parseInt(section_id),
       questionnaire_id:Number.parseInt(q_id)
   });
     
